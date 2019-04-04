@@ -1,0 +1,18 @@
+#!/bin/bash -eu
+
+download_url="https://tdesktop.com/linux"
+telegram_dir="$HOME/.telegram"
+telegram_bin="$telegram_dir/Telegram"
+
+# download
+if [ ! -f "$telegram_bin" ]; then
+    wget -m -nd -P "$telegram_dir" "$download_url"
+    wget -m -nd -P "$telegram_dir" "https://desktop.telegram.org/img/td_logo.png"
+    tar -xvf "$telegram_dir/linux" -C "$telegram_dir" --strip-components=1
+    rm -f "$telegram_dir/linux"
+fi
+
+# create link in ~/.local/bin
+if [ -f "$telegram_bin" ]; then
+    ln -s -f "$telegram_bin" "$HOME/.local/bin/telegram"
+fi

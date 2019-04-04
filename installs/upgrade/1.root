@@ -1,0 +1,12 @@
+#!/bin/bash -eu
+
+log "apt-get ^update^"
+apt-get --yes update
+
+log "apt-get ^upgrade^"
+apt-get --yes upgrade
+
+if [ -n "$(command -v apt-file)" ]; then
+    log "apt-file ^update^"
+    apt-file update
+fi

@@ -1,0 +1,31 @@
+#!/bin/bash -eu
+
+length=15
+rules="[:graph:]"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -l|--len|--length)
+            length="$2"
+            shift
+            ;;
+        -r|--rules)
+            rules="$2"
+            shift
+            ;;
+        *)
+            echo "Unknown argument $1" 1>&2
+            exit 1
+            ;;
+    esac
+
+    shift
+done
+
+ranstr -l "$length" -r "$rules" -d /dev/random | xclip -selection clip‐board
+
+printf "Password copied in clipboard. length: "
+tstyle -n -f Red "$length"
+printf ", rules: "
+tstyle -n -f Red "$rules"
+echo

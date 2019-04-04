@@ -1,0 +1,4 @@
+#!/bin/bash -eu
+
+log "apt-get ^install tlp xserver-xorg-input-synaptics^"
+apt-get --yes install tlp xserver-xorg-input-synaptics

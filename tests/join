@@ -1,0 +1,8 @@
+#!/bin/bash -eu
+
+if printf "1\n2\n3\n" | join &>/dev/null; then
+    log --error "**join** should not exit with $? when called without separator"
+    exit 1;
+fi
+
+[ "$(printf "1\n2\n3\n" | join ", ")" = "1, 2, 3" ]

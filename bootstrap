@@ -1,0 +1,80 @@
+#!/bin/bash -eu
+
+self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# shellcheck source=./util
+. "$self_path/util"
+
+# We need to run this script as normal user
+# to get the right `whoami` and HOME variable
+if [ "$EUID" -eq 0 ]; then
+    log --error "please run as normal user"
+    exit 1
+fi
+
+terminal="$(tty)"
+user_name="$(whoami)"
+script_list=
+
+while true; do
+    script_list=$(pick-from "$(ls installs)" 2>"$terminal")
+
+    if [ -z "$script_list" ]; then
+        echo "You didn't selected any additional script."
+    else
+        tstyle "Additional script: **$(echo "$script_list" | join ", ")**."
+    fi
+
+    ask "Do you confirm?" && break
+done
+
+add_sudoer=false
+enable_autologin=false
+
+ask -Yn "Do you want to add current user in ^/etc/sudoers^?" && add_sudoer=true
+ask -yN "Do you want to enable autologin with current user?" && enable_autologin=true
+
+root_script=
+read-heredoc root_script <<EOF
+set -eu
+
+. "$self_path/util"
+
+install-base-packages
+$add_sudoer && add-sudoer --user "$user_name"
+$enable_autologin && set-autologin --user "$user_name"
+
+if [ -n "$script_list" ]; then
+    run-install "$script_list" --phase 1.root
+    sudo -nsu "$user_name" "$self_path/util" run-install "$script_list" --phase 1.user
+    run-install "$script_list" --phase 2.root
+    sudo -nsu "$user_name" "$self_path/util" run-install "$script_list" --phase 2.user
+fi
+EOF
+
+function clean {
+    rm -f typescript
+}
+
+trap clean EXIT
+
+attempt=0
+script_status_code=1
+while [ $script_status_code -ne 0 ] && [ $attempt -lt 3 ]; do
+    # We can't run `sudo` command at this point because
+    # our user isn't added to /etc/sudoers yet
+    # Anyway `su` will refuse tu run from a shell script,
+    # so this is a dirty workaround
+
+    script --return -qc "su -c '$root_script'"
+    script_status_code=$?
+
+    attempt=$((attempt+1))
+done
+
+if [ $script_status_code -ne 0 ]; then
+    log --error "root script exited with a non-zero status"
+    exit $script_status_code
+fi
+
+restore-home-env

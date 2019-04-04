@@ -1,0 +1,24 @@
+#!/bin/bash -eu
+
+self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# shellcheck source=./util
+. "$self_path/util"
+
+if [ -z "$GITHUB_TOKEN" ]; then
+    log --error "environment variable GITHUB\_TOKEN not setted"
+    exit 1
+fi
+
+dist_name="$(node get-package.js name)"
+
+mkdir -p dist "dist/$dist_name"
+cp -r home installs utils bootstrap util "dist/$dist_name"
+cd dist && tar -czf "${dist_name}.tar.gz" "$dist_name"
+
+cd "$self_path"
+
+git checkout master
+git remote set-url origin "https://emilianobovetti:${GITHUB_TOKEN}@github.com/emilianobovetti/init-xfce.git"
+
+npx release-it -n

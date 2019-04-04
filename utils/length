@@ -1,0 +1,3 @@
+#!/bin/bash -eu
+
+echo -n "${*:-$(cat)}" | tr "$IFS" " " | awk 'BEGIN { RS=" " } { print length($0) }'

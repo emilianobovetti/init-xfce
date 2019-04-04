@@ -1,0 +1,4 @@
+#!/bin/bash -eu
+
+log "apt-get ^install opam m4^"
+apt-get --yes install opam m4

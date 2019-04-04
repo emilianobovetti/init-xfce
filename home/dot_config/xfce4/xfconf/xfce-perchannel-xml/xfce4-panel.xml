@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-panel" version="1.0">
+  <property name="configver" type="int" value="2"/>
+  <property name="panels" type="array">
+    <value type="int" value="1"/>
+    <property name="panel-1" type="empty">
+      <property name="position" type="string" value="p=8;x=683;y=753"/>
+      <property name="length" type="uint" value="100"/>
+      <property name="position-locked" type="bool" value="true"/>
+      <property name="size" type="uint" value="27"/>
+      <property name="plugin-ids" type="array">
+        <value type="int" value="1"/> <!-- Menu button -->
+        <value type="int" value="2"/> <!-- Show desktop -->
+        <value type="int" value="3"/> <!-- Firefox launcher -->
+        <value type="int" value="4"/> <!-- Chromium launcher -->
+        <value type="int" value="5"/> <!-- Task list -->
+        <value type="int" value="6"/> <!-- Task list separator -->
+        <value type="int" value="7"/> <!-- systray -->
+        <value type="int" value="8"/> <!-- Power manager -->
+        <value type="int" value="9"/> <!-- Audio manager -->
+        <value type="int" value="10"/> <!-- Clock -->
+      </property>
+      <property name="nrows" type="uint" value="1"/>
+    </property>
+  </property>
+  <property name="plugins" type="empty">
+
+    <!-- Menu button -->
+    <property name="plugin-1" type="string" value="applicationsmenu">
+      <property name="button-title" type="string" value="Menu"/>
+      <property name="button-icon" type="string" value="view-app-grid-symbolic.symbolic"/>
+    </property>
+
+    <!-- Show desktop -->
+    <property name="plugin-2" type="string" value="showdesktop"/>
+
+    <!-- Firefox launcher -->
+    <property name="plugin-3" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="firefox.desktop"/>
+      </property>
+    </property>
+
+    <!-- Chromium launcher -->
+    <property name="plugin-4" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="chromium.desktop"/>
+      </property>
+    </property>
+
+    <!-- Task list -->
+    <property name="plugin-5" type="string" value="tasklist"/>
+
+    <!-- Task list separator -->
+    <property name="plugin-6" type="string" value="separator">
+      <property name="style" type="uint" value="0"/>
+      <property name="expand" type="bool" value="true"/>
+    </property>
+
+    <!-- systray -->
+    <property name="plugin-7" type="string" value="systray">
+      <property name="names-visible" type="array">
+        <value type="string" value="gestore dei processi"/>
+        <value type="string" value="applet networkmanager"/>
+        <value type="string" value="xfce4-power-manager"/>
+        <value type="string" value="transmission"/>
+        <value type="string" value="megasync"/>
+        <value type="string" value="thunar"/>
+        <value type="string" value="vlc"/>
+      </property>
+      <property name="names-hidden" type="array">
+      </property>
+    </property>
+
+    <!-- Power manager -->
+    <property name="plugin-8" type="string" value="power-manager-plugin"/>
+
+    <!-- Audio manager -->
+    <property name="plugin-9" type="string" value="pulseaudio">
+      <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
+    </property>
+
+    <!-- Clock -->
+    <property name="plugin-10" type="string" value="datetime"/>
+  </property>
+</channel>

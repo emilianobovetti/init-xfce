@@ -1,0 +1,30 @@
+#!/bin/bash -eu
+
+utils_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/utils" && pwd)"
+
+chmod u+x "$utils_dir"/*
+
+for file in "$utils_dir"/*; do
+    eval "function $(basename "$file") { \"$file\" \"\$@\"; }"
+
+    export -f "$(basename "$file")"
+done
+
+function read-heredoc {
+    if [ -z "$1" ]; then
+        log --error "empty variable in **$(basename "$0")**"
+        return 1
+    else
+        read -r -d '' "$1" ||:
+    fi
+}
+
+export -f read-heredoc
+
+cmd="${1:-}"
+
+if [ -n "$cmd" ]; then
+    "$utils_dir/$cmd" "${@:2}"
+
+    exit $?
+fi

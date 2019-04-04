@@ -1,0 +1,17 @@
+#!/bin/bash -eu
+
+if [ -d "$HOME/.opam" ]; then
+    log --warn "^~/.opam^ already exists"
+    exit 0
+fi
+
+if [ -z "$(command -v opam)" ]; then
+    log --error "**opam** command not found"
+    exit 1
+fi
+
+log "opam ^init^"
+opam init
+
+log "opam ^install utop^"
+opam install -y utop
