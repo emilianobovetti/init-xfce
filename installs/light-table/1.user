@@ -1,0 +1,43 @@
+#!/bin/bash -eu
+
+bin_directory="$HOME/.light-table"
+launcher="$HOME/.local/share/applications/light-table.desktop"
+
+if [ -d "$bin_directory" ]; then
+    log --warn "LightTable seems already installed"
+    exit 0
+fi
+
+lt_github_url="https://github.com/LightTable/LightTable/releases/latest"
+lt_latest_url="$(curl -Ls -w %\{url_effective\} "$lt_github_url" | tail -n 1)"
+lt_v="$(basename "$lt_latest_url")"
+lt_url="https://github.com/LightTable/LightTable/releases/download/${lt_v}/lighttable-${lt_v}-linux.tar.gz"
+lt_tgz="$(basename "$lt_url")"
+lt_dir="$(basename -s .tar.gz "$lt_tgz")"
+
+wget -q "$lt_url"
+tar zxvf "$lt_tgz"
+mv "$lt_dir" "$bin_directory"
+rm "$lt_tgz"
+
+# create launcher
+cat << EOF > "$launcher"
+[Desktop Entry]
+Version=1.0
+Type=Application
+Encoding=UTF-8
+Exec=$bin_directory/light %F
+Icon=light-table
+StartupNotify=false
+Categories=Utility;
+OnlyShowIn=XFCE;
+Name=Light Table
+Comment=Light Table text editor
+EOF
+
+chmod a+x "$launcher"
+
+# create link in ~/.local/bin
+if [ -f "$bin_directory/light" ]; then
+    ln -s -f "$bin_directory/light" "$HOME/.local/bin/light"
+fi

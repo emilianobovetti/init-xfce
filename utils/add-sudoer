@@ -1,0 +1,37 @@
+#!/bin/bash -eu
+
+user=
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -u|--user)
+            user="${2:-}"
+            shift
+            ;;
+    esac
+
+    shift ||:
+done
+
+if [ "$EUID" -ne 0 ]; then
+    log --error "please run as root"
+    exit 1
+fi
+
+if ! valid-user "$user"; then
+    if [ -z "$user" ]; then
+        log --error "**$(basename "$0")** must be called with **--user**"
+    else
+        log --error "user **$user** not found"
+    fi
+
+    exit 1
+fi
+
+if [ "$(grep -c "^\s*$user" /etc/sudoers)" -gt 0 ]; then
+    log --warn "user **$user** already in ^/etc/sudoers^"
+else
+    log "adding **$user** to ^/etc/sudoers^"
+
+    echo "$user ALL=(ALL:ALL) ALL" | sudo EDITOR="tee -a" visudo 1>/dev/null
+fi

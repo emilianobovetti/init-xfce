@@ -1,0 +1,10 @@
+{
+  "name": "init-xfce",
+  "version": "0.0.1",
+  "author": "Emiliano Bovetti",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "conventional-changelog-cli": "*",
+    "release-it": "*"
+  }
+}

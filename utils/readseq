@@ -1,0 +1,47 @@
+#!/bin/bash -eu
+
+output=
+chr=
+
+function readchr {
+    read -srN1 chr
+
+    output="$output$chr"
+}
+
+function read-control-sequence-introducer {
+    local chr_ord
+
+    readchr
+
+    printf -v chr_ord "%d" "'$chr"
+
+    if [ "$chr_ord" -lt 64 ] || [ "$chr_ord" -gt 126 ]; then
+        read-control-sequence-introducer
+    fi
+}
+
+function read-operating-system-command {
+    readchr
+
+    if [ "$chr" != $'\x9c' ]; then
+        read-operating-system-command
+    fi
+}
+
+readchr
+
+if [ "$chr" = $'\x1b' ]; then
+    readchr
+
+    case "$chr" in
+        [)
+            read-control-sequence-introducer
+            ;;
+        ])
+            read-operating-system-command
+            ;;
+    esac
+fi
+
+printf "%s" "$output"

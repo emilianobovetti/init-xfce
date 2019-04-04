@@ -1,0 +1,3 @@
+#!/bin/bash -eu
+
+[ "$(tstyle -f red '*hello*, _world_')" = $'\E[31m\E[3mhello\E(B\E[m\E[31m, \E[4mworld\E(B\E[m\E[31m\E(B\E[m' ]

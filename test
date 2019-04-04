@@ -1,0 +1,33 @@
+#!/bin/bash -eu
+
+self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# shellcheck source=./util
+. "$self_path/util"
+
+shellcheck --external-sources --shell=bash \
+    "$self_path/bootstrap" \
+    "$self_path/release" \
+    "$self_path/test" \
+    "$self_path/util"
+
+shellcheck --external-sources --shell=bash "$self_path/installs"/*/*
+shellcheck --external-sources --shell=bash "$self_path/tests"/*
+shellcheck --external-sources --shell=bash "$self_path/utils"/*
+
+status=0
+
+for test in "$self_path/tests"/*; do
+    test_name="$(basename "$test")"
+
+    chmod u+x "$test"
+
+    if "$test"; then
+        log "^$test_name^ passed"
+    else
+        status=1
+        log --error "^$test_name^ failed"
+    fi
+done
+
+exit $status

@@ -1,0 +1,5 @@
+#!/bin/bash -eu
+
+user="${1:-}"
+
+[ -n "$user" ] && [ "$(grep -c -- "$user" /etc/passwd)" -gt 0 ]

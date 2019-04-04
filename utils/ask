@@ -1,0 +1,44 @@
+#!/bin/bash -eu
+
+prompt=
+trail_prompt="[y/n]"
+default=
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -Yn)
+            default=0
+            trail_prompt="[**Y**/n]"
+            ;;
+        -yN)
+            default=1
+            trail_prompt="[y/**N**]"
+            ;;
+        *)
+            prompt="$1"
+            ;;
+    esac
+
+    shift
+done
+
+tstyle -n "$prompt"
+
+while true; do
+    tstyle -n " $trail_prompt "
+
+    read -r resp
+
+    # Trim the input and translate it to uppercase.
+    resp="$(echo "$resp" | tr /a-z/ /A-Z/)"
+
+    if [ -z "$resp" ] && [ -n "$default" ]; then
+        exit $default
+    elif [ "$resp" = "N" ] || [ "$resp" = "NO" ]; then
+        exit 1
+    elif [ "$resp" = "Y" ] || [ "$resp" = "YES" ]; then
+        exit 0
+    else
+        tstyle -n -f Yellow "Invalid choice"
+    fi
+done

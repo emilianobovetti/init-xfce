@@ -1,0 +1,15 @@
+#!/bin/bash -eu
+
+input=${*:-$(cat)}
+result=
+
+for num in $input; do
+    if [ "$num" -eq "$num" ] 2>/dev/null; then
+        [ -z "$result" ] || [ "$num" -gt "$result" ] && result=$num
+    else
+        log --error "non-numeric expression in **$(basename "$0")**"
+        exit 1
+    fi
+done
+
+[ -z "$result" ] && exit 1 || echo "$result"

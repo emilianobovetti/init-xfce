@@ -1,0 +1,5 @@
+#!/bin/bash -eu
+
+for _ in {1..10}; do
+    [ "$(shufstr "$(ranstr --length 20)" | length)" -eq 20 ]
+done

@@ -1,0 +1,38 @@
+#!/bin/bash -eu
+
+message=
+mode=normal
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -w|--warn|--warning)
+            mode=warning
+            ;;
+        -e|--error)
+            mode=error
+            ;;
+        *)
+            message="$1"
+            ;;
+    esac
+
+    shift
+done
+
+case "$mode" in
+    normal)
+        out=/dev/stdout
+        color=Green
+        ;;
+    warning)
+        out=/dev/stdout
+        color=Yellow
+        ;;
+    error)
+        out=/dev/stderr
+        color=Red
+        ;;
+esac
+
+tstyle -n --foreground "$color" "[$(date "+%H:%M:%S")]" > $out
+tstyle " $message" > $out

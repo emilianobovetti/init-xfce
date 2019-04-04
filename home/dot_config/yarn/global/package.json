@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "clean-webpack-plugin": "^0.1.19",
+    "commitizen": "^2.10.1",
+    "copy-webpack-plugin": "^4.5.1",
+    "elm": "^0.18.0",
+    "elm-analyse": "^0.14.2",
+    "elm-format": "^0.6.1-alpha",
+    "elm-test": "^0.18.12",
+    "gatsby-cli": "^1.1.58",
+    "joplin": "^1.0.106",
+    "semantic-release-cli": "^4.0.6",
+    "typescript": "^2.9.2",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
+  }
+}

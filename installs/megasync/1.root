@@ -1,0 +1,13 @@
+#!/bin/bash -eu
+
+if [ -n "$(command -v megasync)" ]; then
+    log --warn "MEGAsync seems already installed"
+    exit 0
+fi
+
+# TODO hardcoded strings make me sad :(
+# TODO restore MEGAsync config
+# TODO download in /tmp
+wget https://mega.nz/linux/MEGAsync/Debian_9.0/amd64/megasync-Debian_9.0_amd64.deb
+gdebi --n megasync-Debian_9.0_amd64.deb
+rm -f megasync-Debian_9.0_amd64.deb

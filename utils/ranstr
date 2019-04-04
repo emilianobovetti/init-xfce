@@ -1,0 +1,31 @@
+#!/bin/bash -eu
+
+length=15
+rules="[:graph:]"
+dev=/dev/urandom
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -l|--len|--length)
+            length="$2"
+            shift
+            ;;
+        -r|--rules)
+            rules="$2"
+            shift
+            ;;
+        -d|--dev)
+            dev="$2"
+            shift
+            ;;
+        *)
+            echo "Unknown argument $1" 1>&2
+            exit 1
+            ;;
+    esac
+
+    shift
+done
+
+stdbuf -o0 tr -dc "$rules" < "$dev" | head -c "$length"
+echo

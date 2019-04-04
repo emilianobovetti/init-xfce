@@ -1,0 +1,44 @@
+#!/bin/bash -eu
+
+phase=
+script_list=
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -p|--phase)
+            phase="${2:-}"
+            shift
+            ;;
+        *)
+            script_list="$script_list $1"
+            ;;
+    esac
+
+    shift ||:
+done
+
+if [ -z "$script_list" ]; then
+    log --error "**$(basename "$0")** is missing the script list"
+    exit 1
+elif [ -z "$phase" ]; then
+    log --error "**$(basename "$0")** must be called with **--phase**"
+    exit 1
+elif echo "$phase" | grep -q user && [ "$EUID" -eq 0 ]; then
+    log --error "phase **$phase** must run as normal user"
+    exit 1
+elif echo "$phase" | grep -q root && [ "$EUID" -ne 0 ]; then
+    log --error "phase **$phase** must run as root"
+    exit 1
+fi
+
+installs_path="$(location-of installs)"
+
+for script in $script_list; do
+    script_path="${installs_path}/${script}/${phase}"
+
+    if [ -f "$script_path" ]; then
+        log "running ^${script}/${phase}^"
+
+        chmod +x "$script_path" && "$script_path"
+    fi
+done

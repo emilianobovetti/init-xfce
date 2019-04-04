@@ -1,0 +1,113 @@
+#!/bin/bash -eu
+
+choice_list=$*
+
+if [ -z "$choice_list" ]; then
+    log --error "empty choice list"
+fi
+
+choices=$(echo "$choice_list" | wc -w)
+selected_index=$choices
+choice_index_list=
+table=
+table_lines=
+
+max_spaces=$(echo "$choice_list" | length | max)
+table_spaces=3
+columns=4
+
+function clear-choices {
+    local line=$table_lines
+
+    while [ $line -gt 0 ]; do
+        tput cuu1
+        line=$((line-1))
+    done
+
+    echo
+    tput ed
+}
+
+function make-table {
+    local index=1
+    local spaces=
+    local choice_length
+
+    for choice in $choice_list; do
+        choice_length=$(length "$choice")
+        spaces=$(( max_spaces + table_spaces - choice_length ))
+
+        echo $choice_index_list | grep -q ":$index:" && tput smul
+        [ "$index" -eq "$selected_index" ] && tput setaf 80
+
+        printf "%s%s%${spaces}s" "$choice" "$(tput sgr0)"
+
+        [ $((index % columns)) -eq 0 ] && echo
+
+        index=$((index+1))
+    done
+}
+
+function draw-choices {
+    table=$(make-table)
+    table_lines=$(echo "$table" | wc -l)
+
+    clear-choices
+    printf "%s" "$table"
+}
+
+tstyle "Use _arrows_ to move, _space_ to select, _enter_ to end\n\n" 1>&2
+tput civis 1>&2
+draw-choices 1>&2
+
+function reset {
+    tput cnorm 1>&2
+    clear-choices
+}
+
+trap reset EXIT
+
+while true; do
+    case "$(readseq)" in
+        $'\E[A') #up
+            selected_index=$((selected_index-columns))
+            ;;
+        $'\E[B') #down
+            selected_index=$((selected_index+columns))
+            ;;
+        $'\E[C') #right
+            selected_index=$((selected_index+1))
+            ;;
+        $'\E[D') #left
+            selected_index=$((selected_index-1))
+            ;;
+        ' ')
+            if echo $choice_index_list | grep -q ":$selected_index:"; then
+                choice_index_list="${choice_index_list//:$selected_index:/}"
+            else
+                choice_index_list="${choice_index_list}:${selected_index}:"
+            fi
+            ;;
+        '')
+            break
+            ;;
+    esac
+
+    [ "$selected_index" -gt "$choices" ] && selected_index=$choices
+    [ "$selected_index" -lt 1 ] && selected_index=1
+
+    draw-choices 1>&2
+done
+
+(reset && tput cuu1 && tput cuu1 && tput ed) 1>&2
+trap : EXIT
+
+for choice_index in ${choice_index_list//:/ }; do
+    index=1
+
+    for choice in $choice_list; do
+        [ "$index" -eq "$choice_index" ] && echo "$choice" && break
+
+        index=$((index+1))
+    done
+done

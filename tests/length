@@ -1,0 +1,8 @@
+#!/bin/bash -eu
+
+list_123="$(printf "1\n2\n3\n")"
+
+[ "$(length a aa aaa)" = "$list_123" ]
+[ "$(echo a aa aaa | length)" = "$list_123" ]
+[ "$(printf 'a\naa\naaa' | length)" = "$list_123" ]
+[ "$(length "$(printf "a\naa\naaa")")" = "$list_123" ]

@@ -1,0 +1,39 @@
+#!/bin/bash -eu
+
+user=
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -u|--user)
+            user="${2:-}"
+            shift
+            ;;
+    esac
+
+    shift ||:
+done
+
+if [ "$EUID" -ne 0 ]; then
+    log --error "please run as root"
+    exit 1
+fi
+
+if ! valid-user "$user"; then
+    if [ -z "$user" ]; then
+        log --error "**$(basename "$0")** must be called with **--user**"
+    else
+        log --error "user **$user** not found"
+    fi
+
+    exit 1
+fi
+
+lightdm_conf=/etc/lightdm/lightdm.conf
+
+if [ "$(grep -c "^\s*autologin-user" $lightdm_conf)" -gt 0 ]; then
+    log --warn "autologin-user is already setted in ^lightdm.conf^"
+else
+    log "setting autologin-user in ^$lightdm_conf^"
+
+    sed -i.bak -E "s|^#(autologin-user=).*|\1$user|;s|^#(autologin-user-timeout=).*|\10|" $lightdm_conf
+fi

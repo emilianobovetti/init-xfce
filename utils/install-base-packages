@@ -1,0 +1,53 @@
+#!/bin/bash -eu
+
+if [ "$EUID" -ne 0 ]; then
+    log --error "please run as root"
+    exit 1
+fi
+
+packages=
+read-heredoc packages <<EOF
+jq
+bc
+ntp
+vim
+git
+sudo
+curl
+nmap
+whois
+xclip
+gdebi
+rsync
+evince
+strace
+screen
+nethogs
+gparted
+dirmngr
+apt-src
+apt-file
+dnsutils
+seahorse
+net-tools
+gddrescue
+xarchiver
+pulseaudio
+unrar-free
+lm-sensors
+simple-scan
+transmission
+gvfs-backends
+poppler-utils
+apt-transport-https
+software-properties-common
+gtk2-engines-murrine
+gtk2-engines-pixbuf
+gtk3-engines-xfce
+numix-gtk-theme
+EOF
+
+log "installing base packages"
+echo $packages
+
+apt-get --yes install $packages

@@ -1,0 +1,11 @@
+#!/bin/bash -eu
+
+key_id="${1:-}"
+
+if [ -z "$key_id" ]; then
+    log --error "empty **key_id**"
+    exit 1
+fi
+
+gpg --keyserver pgp.surfnet.nl --recv "$key_id"
+gpg --export --armor "$key_id" | apt-key add -

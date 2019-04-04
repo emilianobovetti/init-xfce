@@ -1,0 +1,16 @@
+#!/bin/bash -eu
+
+base_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+[ -z "${1:-}" ] && log --error "**$(basename "$0")** called without arg" && exit 1
+
+[ "$1" = base ] && echo "$base_dir" && exit 0
+
+path="$base_dir/$1"
+
+if [ -e "$path" ]; then
+    echo "$path"
+else
+    log --error "**$path** does not exist"
+    exit 1
+fi

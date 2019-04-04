@@ -1,0 +1,18 @@
+#!/bin/bash -eu
+
+yarn_sources=/etc/apt/sources.list.d/yarn.list
+
+log "adding yarn pubkey"
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+
+if [ -f "$yarn_sources" ]; then
+    log --warn "^$yarn_sources^ found"
+else
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee "$yarn_sources"
+fi
+
+log "apt-get ^update^"
+apt-get --yes update
+
+log "apt-get ^install yarn^"
+apt-get --yes install yarn

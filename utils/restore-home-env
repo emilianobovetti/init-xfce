@@ -1,0 +1,52 @@
+#!/bin/bash -eu
+
+if [ "$EUID" -eq 0 ]; then
+    log --error "please run as normal user"
+    exit 1
+fi
+
+base_path="$(location-of base)"
+utils_path="$(location-of utils)"
+home_local_bin="$HOME/.local/bin"
+
+log "checking ^~/.vim^ directories"
+test -d "$HOME/.vim" || mkdir "$HOME/.vim"
+test -d "$HOME/.vim/swap" || mkdir "$HOME/.vim/swap"
+test -d "$HOME/.vim/undo" || mkdir "$HOME/.vim/undo"
+test -d "$HOME/.vim/backup" || mkdir "$HOME/.vim/backup"
+
+log "^xfce4-panel^ --quit"
+xfce4-panel --quit ||:
+pkill xfconfd
+
+log "removing ^xfce4/panel^ and ^xfce4/xfconf^"
+rm -rf "$HOME/.config/xfce4/panel" "$HOME/.config/xfce4/xfconf"
+
+log "restoring home environment backup"
+for file in "$base_path/home"/*; do
+    file="$(basename "$file")"
+
+    if [ -d "$base_path/home/$file" ]; then
+        rsync -r "$base_path/home/$file/." "$HOME/${file/dot_/.}"
+    else
+        rsync -r "$base_path/home/$file" "$HOME/${file/dot_/.}"
+    fi
+done
+
+log "restarting ^xfce4-panel^"
+xfce4-panel &>/dev/null &
+
+log "touch ^~/.local/bin^"
+test -d "$home_local_bin" || mkdir "$home_local_bin"
+
+log "remove dangling links from ^~/.local/bin^"
+find "$home_local_bin" -xtype l -delete
+
+log "copying utils in ^~/.local/bin^"
+cp "$utils_path/tstyle" "$home_local_bin"
+cp "$utils_path/ranstr" "$home_local_bin"
+cp "$utils_path/mkpsw" "$home_local_bin"
+cp "$utils_path/roll" "$home_local_bin"
+
+log "set **u+x** on all files in ^~/.local/bin^"
+chmod u+x "$home_local_bin"/*
