@@ -40,5 +40,10 @@ for script in $script_list; do
         log "running ^${script}/${phase}^"
 
         chmod +x "$script_path" && "$script_path"
+
+    else
+        log --error "unable to find ^${script}/${phase}^"
+
+        exit 1
     fi
 done
