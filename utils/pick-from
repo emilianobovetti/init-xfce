@@ -12,7 +12,7 @@ choice_index_list=
 table=
 table_lines=
 
-max_spaces=$(echo "$choice_list" | length | max)
+max_spaces=$(echo "$choice_list" | strlength | max)
 table_spaces=3
 columns=4
 
@@ -34,7 +34,7 @@ function make-table {
     local choice_length
 
     for choice in $choice_list; do
-        choice_length=$(length "$choice")
+        choice_length=$(strlength "$choice")
         spaces=$(( max_spaces + table_spaces - choice_length ))
 
         echo $choice_index_list | grep -q ":$index:" && tput smul

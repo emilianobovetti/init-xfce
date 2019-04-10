@@ -22,7 +22,7 @@ while true; do
     if [ -z "$script_list" ]; then
         echo "You didn't selected any additional script."
     else
-        tstyle "Additional script: **$(echo "$script_list" | join ", ")**."
+        tstyle "Additional script: **$(echo "$script_list" | strjoin ", ")**."
     fi
 
     ask "Do you confirm?" && break
