@@ -32,3 +32,18 @@ Now the process can run without further user inputs:
 - The requested actions will be executed
 - [Home](https://github.com/emilianobovetti/init-xfce/tree/master/home) files will be restored
 - Finally some utilities will be copied in `~/.local/bin` (such as `tstyle`, `ranstr` and `mkpsw`)
+
+### Use util scripts outside `bootstrap`
+
+```bash
+# e.g.
+sudo ./util install-base-packages
+./util valid-user $(whoami) && echo yup
+```
+
+### Run install script outside `bootstrap`
+
+```bash
+# e.g.
+sudo ./util run-install --user $(whoami) laptop
+```
