@@ -44,9 +44,7 @@ install-base-packages
 $add_sudoer && add-sudoer --user "$user_name"
 $enable_autologin && set-autologin --user "$user_name"
 
-if [ -n "$script_list" ]; then
-    run-install "$script_list" --user "$user_name"
-fi
+[ -n "$script_list" ] && run-install "$script_list" --user "$user_name"
 EOF
 
 function clean {
