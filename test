@@ -5,15 +5,19 @@ self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=./util
 . "$self_path/util"
 
-shellcheck --external-sources --shell=bash \
+log "running shellcheck"
+
+shellcheck_cmd="shellcheck --external-sources --shell=bash"
+
+$shellcheck_cmd \
     "$self_path/bootstrap" \
     "$self_path/release" \
     "$self_path/test" \
     "$self_path/util"
 
-shellcheck --external-sources --shell=bash "$self_path/installs"/*/*
-shellcheck --external-sources --shell=bash "$self_path/tests"/*
-shellcheck --external-sources --shell=bash "$self_path/utils"/*
+$shellcheck_cmd "$self_path/installs"/*/*
+$shellcheck_cmd "$self_path/tests"/*
+$shellcheck_cmd "$self_path/utils"/*
 
 status=0
 
