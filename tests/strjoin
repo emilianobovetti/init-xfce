@@ -1,0 +1,8 @@
+#!/bin/bash -eu
+
+if printf "1\n2\n3\n" | strjoin &>/dev/null; then
+    log --error "**strjoin** should not exit with $? when called without separator"
+    exit 1;
+fi
+
+[ "$(printf "1\n2\n3\n" | strjoin ", ")" = "1, 2, 3" ]
