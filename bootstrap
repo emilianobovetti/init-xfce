@@ -45,10 +45,7 @@ $add_sudoer && add-sudoer --user "$user_name"
 $enable_autologin && set-autologin --user "$user_name"
 
 if [ -n "$script_list" ]; then
-    run-install "$script_list" --phase 1.root
-    sudo -nsu "$user_name" "$self_path/util" run-install "$script_list" --phase 1.user
-    run-install "$script_list" --phase 2.root
-    sudo -nsu "$user_name" "$self_path/util" run-install "$script_list" --phase 2.user
+    run-install "$script_list" --user "$user_name"
 fi
 EOF
 

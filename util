@@ -4,11 +4,9 @@ utils_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/utils" && pwd)"
 
 chmod u+x "$utils_dir"/*
 
-for file in "$utils_dir"/*; do
-    eval "function $(basename "$file") { \"$file\" \"\$@\"; }"
-
-    export -f "$(basename "$file")"
-done
+if [ "$(echo "$PATH" | grep -c "$utils_dir")" -lt 1 ]; then
+    export PATH="$PATH:$utils_dir"
+fi
 
 function read-heredoc {
     if [ -z "$1" ]; then

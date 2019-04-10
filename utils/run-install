@@ -1,12 +1,12 @@
 #!/bin/bash -eu
 
-phase=
+user=
 script_list=
 
 while [ $# -gt 0 ]; do
     case "$1" in
-        -p|--phase)
-            phase="${2:-}"
+        -u|--user)
+            user="${2:-}"
             shift
             ;;
         *)
@@ -20,30 +20,46 @@ done
 if [ -z "$script_list" ]; then
     log --error "**$(basename "$0")** is missing the script list"
     exit 1
-elif [ -z "$phase" ]; then
-    log --error "**$(basename "$0")** must be called with **--phase**"
+elif [ -z "$user" ]; then
+    log --error "**$(basename "$0")** must be called with **--user**"
     exit 1
-elif echo "$phase" | grep -q user && [ "$EUID" -eq 0 ]; then
-    log --error "phase **$phase** must run as normal user"
+elif ! valid-user "$user"; then
+    log --error "user **$user** isn't a valid user or doesn't exist"
     exit 1
-elif echo "$phase" | grep -q root && [ "$EUID" -ne 0 ]; then
-    log --error "phase **$phase** must run as root"
+elif [ "$EUID" -ne 0 ]; then
+    log --error "**$(basename "$0")** must be called as root"
     exit 1
 fi
 
 installs_path="$(location-of installs)"
 
 for script in $script_list; do
-    script_path="${installs_path}/${script}/${phase}"
+    script_dir="${installs_path}/${script}"
 
-    if [ -f "$script_path" ]; then
-        log "running ^${script}/${phase}^"
+    if [ ! -d "$script_dir" ] || [ -z "$(ls "$script_dir")" ]; then
+        log --warn "script ^$script_dir^ doesn't exist"
 
-        chmod +x "$script_path" && "$script_path"
-
-    else
-        log --error "unable to find ^${script}/${phase}^"
-
-        exit 1
+        continue
     fi
+
+    for script_full_path in "$script_dir"/*; do
+        log "running ^$script_full_path^"
+
+        chmod +x "$script_full_path"
+
+        phase="$(basename "$script_full_path")"
+
+        case "${phase//[0-9]*\./}" in
+            root)
+                "$script_full_path"
+            ;;
+            user)
+                sudo -nu "$user" bash -c "PATH=\"$PATH\" \"$script_full_path\""
+            ;;
+            *)
+                log --error "unknown phase **$phase**"
+                exit 1
+            ;;
+        esac
+    done
 done
