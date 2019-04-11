@@ -23,7 +23,7 @@ if [ -z "$script_list" ]; then
 elif [ -z "$user" ]; then
     log --error "**$(basename "$0")** must be called with **--user**"
     exit 1
-elif ! valid-user "$user"; then
+elif ! user-exists "$user"; then
     log --error "user **$user** isn't a valid user or doesn't exist"
     exit 1
 elif [ "$EUID" -ne 0 ]; then

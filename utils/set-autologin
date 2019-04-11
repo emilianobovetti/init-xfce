@@ -18,7 +18,7 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-if ! valid-user "$user"; then
+if ! user-exists "$user"; then
     if [ -z "$user" ]; then
         log --error "**$(basename "$0")** must be called with **--user**"
     else
