@@ -61,10 +61,9 @@ while [ $script_status_code -ne 0 ] && [ $attempt -lt 3 ]; do
     # Anyway `su` will refuse tu run from a shell script,
     # so this is a dirty workaround
 
-    script --return -qc "su -c '$root_script'"
-    script_status_code=$?
+    script --return -qc "su -c '$root_script'" || script_status_code=$?
 
-    attempt=$((attempt+1))
+    attempt=$((attempt + 1))
 done
 
 if [ $script_status_code -ne 0 ]; then
