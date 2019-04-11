@@ -3,3 +3,5 @@
 user-exists && exit 1
 user-exists "$(whoami)" || exit 1
 user-exists "-not-an-user" && exit 1
+
+exit 0
