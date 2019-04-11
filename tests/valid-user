@@ -1,4 +1,0 @@
-#!/bin/bash -eu
-
-valid-user "-not-an-user" && exit 1
-valid-user "$(whoami)" || exit 1

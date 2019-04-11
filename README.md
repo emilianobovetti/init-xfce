@@ -38,7 +38,7 @@ Now the process can run without further user inputs:
 ```bash
 # e.g.
 sudo ./util install-base-packages
-./util valid-user $(whoami) && echo yup
+./util user-exists $(whoami) && echo yup
 ```
 
 ### Run install script outside `bootstrap`
