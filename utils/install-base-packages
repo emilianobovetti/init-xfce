@@ -5,8 +5,7 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-packages=
-read-heredoc packages <<EOF
+packages=$(cat <<EOF
 jq
 bc
 ntp
@@ -46,6 +45,7 @@ gtk2-engines-pixbuf
 gtk3-engines-xfce
 numix-gtk-theme
 EOF
+)
 
 log "installing base packages"
 echo $packages
