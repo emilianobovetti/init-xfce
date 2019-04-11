@@ -48,6 +48,8 @@ EOF
 )
 
 log "installing base packages"
+# shellcheck disable=SC2086
 echo $packages
 
+# shellcheck disable=SC2086
 apt-get --yes install $packages
