@@ -34,8 +34,7 @@ enable_autologin=false
 ask -Yn "Do you want to add current user in ^/etc/sudoers^?" && add_sudoer=true
 ask -yN "Do you want to enable autologin with current user?" && enable_autologin=true
 
-root_script=
-read-heredoc root_script <<EOF
+root_script=$(cat <<EOF
 set -eu
 
 . "$self_path/util"
@@ -46,6 +45,7 @@ $enable_autologin && set-autologin --user "$user_name"
 
 [ -n "$script_list" ] && run-install "$script_list" --user "$user_name"
 EOF
+)
 
 function clean {
     rm -f typescript
