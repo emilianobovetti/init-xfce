@@ -57,7 +57,7 @@ trap clean EXIT
 
 attempt=0
 script_status_code=1
-while [ $script_status_code -ne 0 ] && [ $attempt -lt 1 ]; do
+while [ $script_status_code -ne 0 ] && [ $attempt -lt 3 ]; do
     # We can't run `sudo` command at this point because
     # our user isn't added to /etc/sudoers yet
     # Anyway `su` will refuse tu run from a shell script,
