@@ -3,8 +3,8 @@
 log "apt-get ^update^"
 apt-get --yes update
 
-log "apt-get ^upgrade^"
-apt-get --yes upgrade
+log "apt-get ^dist-upgrade^"
+apt-get --yes dist-upgrade
 
 if [ -n "$(command -v apt-file)" ]; then
     log "apt-file ^update^"
