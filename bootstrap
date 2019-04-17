@@ -44,6 +44,8 @@ $add_sudoer && add-sudoer --user "$user_name"
 $enable_autologin && set-autologin --user "$user_name"
 
 [ -n "$script_list" ] && run-install "$script_list" --user "$user_name"
+
+exit 0
 EOF
 )
 
@@ -55,13 +57,17 @@ trap clean EXIT
 
 attempt=0
 script_status_code=1
-while [ $script_status_code -ne 0 ] && [ $attempt -lt 3 ]; do
+while [ $script_status_code -ne 0 ] && [ $attempt -lt 1 ]; do
     # We can't run `sudo` command at this point because
     # our user isn't added to /etc/sudoers yet
     # Anyway `su` will refuse tu run from a shell script,
     # so this is a dirty workaround
 
-    script --return -qc "su -c '$root_script'" || script_status_code=$?
+    if script --return -qc "su -c '$root_script'"; then
+        script_status_code=0
+    else
+        script_status_code=$?
+    fi
 
     attempt=$((attempt + 1))
 done
