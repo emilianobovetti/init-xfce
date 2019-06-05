@@ -4,7 +4,7 @@
   "author": "Emiliano Bovetti",
   "license": "GPL-3.0",
   "devDependencies": {
-    "conventional-changelog-cli": "*",
-    "release-it": "*"
+    "conventional-changelog-cli": "2.0.21",
+    "release-it": "12.2.2"
   }
 }
