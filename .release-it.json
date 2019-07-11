@@ -1,6 +1,5 @@
 {
     "non-interactive": true,
-    "increment": "conventional:angular",
     "git": {
         "requireUpstream": false,
         "requireCleanWorkingDir": false,
@@ -13,8 +12,10 @@
         "release": true,
         "assets": ["dist/*.tar.gz"]
     },
-    "scripts": {
-        "changelog": "npx conventional-changelog -p angular -u | tail -n +3",
-        "beforeStage": "npx conventional-changelog -p angular -i CHANGELOG.md -s"
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "preset": "angular",
+            "infile": "CHANGELOG.md"
+        }
     }
 }
