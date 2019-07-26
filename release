@@ -10,10 +10,10 @@ if [ -z "$GITHUB_TOKEN" ]; then
     exit 1
 fi
 
-dist_name="$(node get-package.js name)"
+dist_name="$(node get-package-info.js name)"
 
 mkdir -p dist "dist/$dist_name"
-cp -r home installs utils bootstrap util "dist/$dist_name"
+cp -r home installs utils start util "dist/$dist_name"
 cd dist && tar -czf "${dist_name}.tar.gz" "$dist_name"
 
 cd "$self_path"
