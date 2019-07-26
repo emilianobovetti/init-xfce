@@ -10,7 +10,7 @@ log "running shellcheck"
 shellcheck_cmd="shellcheck --external-sources --shell=bash"
 
 $shellcheck_cmd \
-    "$self_path/bootstrap" \
+    "$self_path/start" \
     "$self_path/release" \
     "$self_path/test" \
     "$self_path/util"

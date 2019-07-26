@@ -8,13 +8,13 @@ Please note that this is experimental work.
 
 ## Setup
 
-Download the [latest release](https://github.com/emilianobovetti/init-xfce/releases/latest/download/init-xfce.tar.gz), untar it and run `bootstrap`.
+Download the [latest release](https://github.com/emilianobovetti/init-xfce/releases/latest/download/init-xfce.tar.gz), untar it and run `start`.
 
 ```bash
 wget https://github.com/emilianobovetti/init-xfce/releases/latest/download/init-xfce.tar.gz
 tar -xzf init-xfce.tar.gz
 cd init-xfce
-./bootstrap
+./start
 ```
 
 ## What does `init-xfce` do?
@@ -33,7 +33,7 @@ Now the process can run without further user inputs:
 - [Home](https://github.com/emilianobovetti/init-xfce/tree/master/home) files will be restored
 - Finally some utilities will be copied in `~/.local/bin` (such as `tstyle`, `ranstr` and `mkpsw`)
 
-### Use util scripts outside `bootstrap`
+### Use util scripts outside `start`
 
 ```bash
 # e.g.
@@ -41,7 +41,7 @@ sudo ./util install-base-packages
 ./util user-exists $(whoami) && echo yup
 ```
 
-### Run install script outside `bootstrap`
+### Run install script outside `start`
 
 ```bash
 # e.g.
