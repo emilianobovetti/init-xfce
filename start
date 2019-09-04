@@ -2,22 +2,43 @@
 
 self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=./util
-. "$self_path/util"
+# shellcheck source=./utils-env
+. "$self_path/utils-env" --
 
-# We need to run this script as normal user
-# to get the right `whoami` and HOME variable
-if [ "$EUID" -eq 0 ]; then
-    log --error "please run as normal user"
+if [ "$EUID" -ne 0 ]; then
+    log --error "please run as root"
+    exit 1
+fi
+
+user_name=
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -u|--user)
+            user_name="${2:-}"
+            shift
+            ;;
+    esac
+
+    shift ||:
+done
+
+if ! user-exists "$user_name"; then
+    log --error "user $user_name doesn't seem to exist"
+    exit 1
+elif [ -z "$(user-home "$user_name")" ]; then
+    log --error "user $user_name doesn't seem to have a home directory"
     exit 1
 fi
 
 terminal="$(tty)"
-user_name="$(whoami)"
+utils_path="$(location-of utils)"
+installs_path="$(location-of installs)"
+install_scripts="$(ls "$installs_path")"
 script_list=
 
 while true; do
-    script_list=$(pick-from "$(ls installs)" 2>"$terminal")
+    script_list=$(pick-from "$install_scripts" 2>"$terminal")
 
     if [ -z "$script_list" ]; then
         echo "You didn't selected any additional script."
@@ -31,13 +52,8 @@ done
 add_sudoer=false
 enable_autologin=false
 
-ask -Yn "Do you want to add current user in ^/etc/sudoers^?" && add_sudoer=true
-ask -yN "Do you want to enable autologin with current user?" && enable_autologin=true
-
-root_script=$(cat <<EOF
-set -eu
-
-. "$self_path/util"
+ask -Yn "Do you want to add $user_name in ^/etc/sudoers^?" && add_sudoer=true
+ask -yN "Do you want to enable autologin with for $user_name?" && enable_autologin=true
 
 install-base-packages
 $add_sudoer && add-sudoer --user "$user_name"
@@ -45,36 +61,4 @@ $enable_autologin && set-autologin --user "$user_name"
 
 [ -n "$script_list" ] && run-install "$script_list" --user "$user_name"
 
-exit 0
-EOF
-)
-
-function clean {
-    rm -f typescript
-}
-
-trap clean EXIT
-
-attempt=0
-script_status_code=1
-while [ $script_status_code -ne 0 ] && [ $attempt -lt 3 ]; do
-    # We can't run `sudo` command at this point because
-    # our user isn't added to /etc/sudoers yet
-    # Anyway `su` will refuse tu run from a shell script,
-    # so this is a dirty workaround
-
-    if script --return -qc "su -c '$root_script'"; then
-        script_status_code=0
-    else
-        script_status_code=$?
-    fi
-
-    attempt=$((attempt + 1))
-done
-
-if [ $script_status_code -ne 0 ]; then
-    log --error "root script exited with a non-zero status"
-    exit $script_status_code
-fi
-
-restore-home-env
+sudo -nu "$user_name" bash -c "PATH=\"$PATH\" \"$utils_path/restore-home-env\""

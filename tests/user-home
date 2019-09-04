@@ -1,0 +1,7 @@
+#!/bin/bash -eu
+
+[ -z "$(user-home)" ]
+[ -z "$(user-home "-not-an-user")" ]
+[ "$(user-home "$(whoami)")" = "$(eval echo ~)" ]
+
+exit 0

@@ -9,7 +9,7 @@ cache:
   yarn: true
 
 script:
-  - bash test
+  - bash run-tests
 
 deploy:
   provider: script
