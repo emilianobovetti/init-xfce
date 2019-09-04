@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/emilianobovetti/init-xfce/compare/0.1.4...0.2.0) (2019-09-04)
+
+
+### Features
+
+* run `start` script as root ([fb97950](https://github.com/emilianobovetti/init-xfce/commit/fb97950))
+
 ## [0.1.4](https://github.com/emilianobovetti/init-xfce/compare/0.1.2...0.1.4) (2019-07-11)
 
 
