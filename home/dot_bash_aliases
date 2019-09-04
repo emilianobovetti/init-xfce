@@ -6,19 +6,11 @@ alias bc='bc -l'
 alias ping='ping -c 5'
 alias preln="sudo 'prelink -afmR'"
 
-# Edit #
-alias edit-alias="$EDITOR $HOME/.bash_aliases"
-alias edit-bashrc="$EDITOR $HOME/.bashrc"
-
-# cdrdao read-cd --read-raw --read-subchan rw_raw --datafile CD1.raw.iso --device /dev/sr0 --driver generic-mmc-raw CD1.raw.toc
-
 # Network #
 alias chromium-tor='chromium --proxy-server=SOCKS5://localhost:9050 --incognito'
-alias apache="sudo 'service apache2 start'"
-alias apache-restart="sudo 'service apache2 restart'"
 alias pgstart='su - postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l logfile start"'
 alias pgstop='su - postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l logfile stop"'
-alias mon="sudo 'iwconfig wlan0 mode Monitor && rfkill unblock wifi'"
+alias wifi-mon="sudo 'iwconfig wlan0 mode Monitor && rfkill unblock wifi'"
 
 function pingb {
     exec 3>&1
@@ -38,7 +30,6 @@ function curl-json {
 
 # cd #
 alias desk="cd "$(xdg-user-dir DESKTOP)""
-alias www="cd $HOME/www"
 
 # Git #
 
@@ -52,15 +43,8 @@ alias gco='git checkout'
 alias gb='git branch'
 alias gl="git log --format='%Cgreen%h%Creset %C(cyan)%an%Creset - %s' --graph"
 
-function gtv {
-    git tag -a "v$1"
-}
-
-# PHP #
-alias artisan='php artisan'
-
 # Wine #
-alias winekill="kill $(ps aux | grep -E  '.*\.exe' | awk '{print $2}')"
+alias wine-killall="kill $(ps aux | grep -E  '.*\.exe' | awk '{print $2}')"
 
 # Click flood #
-alias click='xdotool click --repeat 100 --delay 10 1'
+alias click-flood='xdotool click --repeat 100 --delay 10 1'

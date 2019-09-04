@@ -2,7 +2,7 @@
 
 utils_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/utils" && pwd)"
 
-if [ "$(echo "$PATH" | grep -c "$utils_dir")" -lt 1 ]; then
+if [ "$(echo "$PATH" | grep -c -- "$utils_dir")" -lt 1 ]; then
     chmod u+x "$utils_dir"/*
 
     export PATH="$PATH:$utils_dir"
@@ -10,6 +10,6 @@ fi
 
 cmd="${1:-}"
 
-if [ -n "$cmd" ]; then
+if [ -n "$cmd" ] && [ "$cmd" != -- ]; then
     "$utils_dir/$cmd" "${@:2}"
 fi

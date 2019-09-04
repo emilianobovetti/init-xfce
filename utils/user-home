@@ -1,0 +1,5 @@
+#!/bin/bash -eu
+
+user="${1:-}"
+
+[ -n "$user" ] && getent passwd | grep -- "$user" | cut -d: -f6

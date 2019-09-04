@@ -2,8 +2,8 @@
 
 self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=./util
-. "$self_path/util"
+# shellcheck source=./utils-env
+. "$self_path/utils-env" --
 
 if [ -z "$GITHUB_TOKEN" ]; then
     log --error "environment variable GITHUB\_TOKEN not setted"
@@ -13,7 +13,7 @@ fi
 dist_name="$(node get-package-info.js name)"
 
 mkdir -p dist "dist/$dist_name"
-cp -r home installs utils start util "dist/$dist_name"
+cp -r home installs utils start utils-env "dist/$dist_name"
 cd dist && tar -czf "${dist_name}.tar.gz" "$dist_name"
 
 cd "$self_path"

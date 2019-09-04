@@ -2,4 +2,4 @@
 
 user="${1:-}"
 
-[ -n "$user" ] && [ "$(grep -c -- "$user" /etc/passwd)" -gt 0 ]
+[ -n "$user" ] && [ "$(getent passwd | grep -c -- "$user")" -gt 0 ]

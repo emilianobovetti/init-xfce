@@ -14,7 +14,9 @@ Download the [latest release](https://github.com/emilianobovetti/init-xfce/relea
 wget https://github.com/emilianobovetti/init-xfce/releases/latest/download/init-xfce.tar.gz
 tar -xzf init-xfce.tar.gz
 cd init-xfce
-./start
+my_user=$(whoami)
+su
+./start --user $my_user
 ```
 
 ## What does `init-xfce` do?
@@ -22,11 +24,11 @@ cd init-xfce
 First of all you will be prompted to enter some informations:
 
 - Which additional [install script](https://github.com/emilianobovetti/init-xfce/tree/master/installs) run
-- If you want to add your current user in `/etc/sudoers`
+- If you want to add your user in `/etc/sudoers`
 - If you want to enable autologin for the same user
 - The root password
 
-Now the process can run without further user inputs:
+Now the process can run without further interactions:
 
 - Some [base packages](https://github.com/emilianobovetti/init-xfce/blob/master/utils/install-base-packages) will be installed
 - The requested actions will be executed
@@ -37,13 +39,13 @@ Now the process can run without further user inputs:
 
 ```bash
 # e.g.
-sudo ./util install-base-packages
-./util user-exists $(whoami) && echo yup
+sudo ./utils-env install-base-packages
+./utils-env user-exists $(whoami) && echo yup
 ```
 
 ### Run install script outside `start`
 
 ```bash
 # e.g.
-sudo ./util run-install --user $(whoami) laptop
+sudo ./utils-env run-install --user $(whoami) laptop
 ```
