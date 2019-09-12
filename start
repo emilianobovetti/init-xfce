@@ -55,7 +55,19 @@ enable_autologin=false
 ask -Yn "Do you want to add $user_name in ^/etc/sudoers^?" && add_sudoer=true
 ask -yN "Do you want to enable autologin with for $user_name?" && enable_autologin=true
 
+log "apt-get ^update^"
+apt-get --yes update
+
+log "apt-get ^dist-upgrade^"
+apt-get --yes dist-upgrade
+
 install-base-packages
+
+if [ -n "$(command -v apt-file)" ]; then
+    log "apt-file ^update^"
+    apt-file update
+fi
+
 $add_sudoer && add-sudoer --user "$user_name"
 $enable_autologin && set-autologin --user "$user_name"
 
