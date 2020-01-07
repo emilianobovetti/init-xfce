@@ -27,9 +27,9 @@ for file in "$base_path/home"/*; do
     file="$(basename "$file")"
 
     if [ -d "$base_path/home/$file" ]; then
-        rsync -r "$base_path/home/$file/." "$HOME/${file/dot_/.}"
+        rsync -r "$base_path/home/$file/." "$HOME/$file"
     else
-        rsync -r "$base_path/home/$file" "$HOME/${file/dot_/.}"
+        rsync -r "$base_path/home/$file" "$HOME/$file"
     fi
 done
 
