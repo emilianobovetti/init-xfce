@@ -5,9 +5,11 @@ if [ -n "$(command -v megasync)" ]; then
     exit 0
 fi
 
-# TODO hardcoded strings make me sad :(
+. /etc/os-release
+deb_filename="megasync-Debian_$VERSION_ID.0_amd64.deb"
+
 # TODO restore MEGAsync config
 # TODO download in /tmp
-wget https://mega.nz/linux/MEGAsync/Debian_9.0/amd64/megasync-Debian_9.0_amd64.deb
-gdebi --n megasync-Debian_9.0_amd64.deb
-rm -f megasync-Debian_9.0_amd64.deb
+wget "https://mega.nz/linux/MEGAsync/Debian_$VERSION_ID.0/amd64/$deb_filename"
+gdebi --n "$deb_filename"
+rm -f "$deb_filename"
