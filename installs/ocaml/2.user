@@ -13,5 +13,5 @@ fi
 log "opam ^init^"
 opam init
 
-log "opam ^install utop^"
-opam install -y utop
+log "opam ^install utop ocamlmerlin^"
+opam install -y utop ocamlmerlin
