@@ -25,7 +25,7 @@ rm -rf "$HOME/.config/xfce4/panel" "$HOME/.config/xfce4/xfconf"
 log "restoring home environment backup"
 
 # Using find to list hidden files too
-find "$home_path" -maxdepth 1 | while read path; do
+find "$home_path" -maxdepth 1 | while read -r path; do
     filename="$(basename "$path")"
 
     if [ "$path" = "$home_path" ]; then

@@ -6,7 +6,7 @@ self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$self_path/utils-env" --
 
 if [ -z "$GITHUB_TOKEN" ]; then
-    log --error "environment variable GITHUB\_TOKEN not setted"
+    log --error "environment variable GITHUB\\_TOKEN not setted"
     exit 1
 fi
 

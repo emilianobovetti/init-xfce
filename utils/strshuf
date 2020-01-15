@@ -1,4 +1,4 @@
 #!/bin/bash -eu
 
-echo "${*:-$(cat)}" | sed 's/./&\n/g' | shuf | tr -d "\n"
+echo "${*:-$(cat)}" | sed 's/./&\n/g' | shuf | tr -d '\n'
 echo

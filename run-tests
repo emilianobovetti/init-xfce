@@ -7,19 +7,16 @@ self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 log "running shellcheck"
 
-shellcheck_cmd="shellcheck --external-sources --shell=bash"
-
-$shellcheck_cmd \
+shellcheck --external-sources --shell=bash \
     "$self_path/start" \
     "$self_path/release" \
     "$self_path/run-tests" \
-    "$self_path/utils-env"
+    "$self_path/utils-env" \
+    "$self_path/installs"/*/* \
+    "$self_path/tests"/* \
+    "$self_path/utils"/*
 
-$shellcheck_cmd "$self_path/installs"/*/*
-$shellcheck_cmd "$self_path/tests"/*
-$shellcheck_cmd "$self_path/utils"/*
-
-status=0
+status=$?
 
 for test_path in "$self_path/tests"/*; do
     test_name="$(basename "$test_path")"

@@ -1,8 +1,8 @@
 #!/bin/bash -eu
 
-list_123="$(printf "1\n2\n3\n")"
+list_123="$(printf '1\n2\n3\n')"
 
 [ "$(strlength a aa aaa)" = "$list_123" ]
 [ "$(echo a aa aaa | strlength)" = "$list_123" ]
 [ "$(printf 'a\naa\naaa' | strlength)" = "$list_123" ]
-[ "$(strlength "$(printf "a\naa\naaa")")" = "$list_123" ]
+[ "$(strlength "$(printf 'a\naa\naaa')")" = "$list_123" ]

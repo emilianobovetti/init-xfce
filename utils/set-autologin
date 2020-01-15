@@ -35,5 +35,5 @@ if [ "$(grep -c "^\s*autologin-user" $lightdm_conf)" -gt 0 ]; then
 else
     log "setting autologin-user in ^$lightdm_conf^"
 
-    sed -i.bak -E "s|^#(autologin-user=).*|\1$user|;s|^#(autologin-user-timeout=).*|\10|" $lightdm_conf
+    sed -i.bak -E "s|^#(autologin-user=).*|\\1$user|;s|^#(autologin-user-timeout=).*|\\10|" $lightdm_conf
 fi

@@ -28,7 +28,7 @@ if ! user-exists "$user"; then
     exit 1
 fi
 
-if [ "$(grep -c "^\s*$user" /etc/sudoers)" -gt 0 ]; then
+if [ "$(grep -c "^\\s*$user" /etc/sudoers)" -gt 0 ]; then
     log --warn "user **$user** already in ^/etc/sudoers^"
 else
     log "adding **$user** to ^/etc/sudoers^"

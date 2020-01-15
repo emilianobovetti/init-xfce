@@ -56,7 +56,7 @@ function draw-choices {
     printf "%s" "$table"
 }
 
-tstyle "Use _arrows_ to move, _space_ to select, _enter_ to end\n\n" 1>&2
+tstyle 'Use _arrows_ to move, _space_ to select, _enter_ to end\n\n' 1>&2
 tput civis 1>&2
 draw-choices 1>&2
 

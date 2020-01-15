@@ -2,4 +2,4 @@
 
 [ -z "${1:-}" ] && log --error "**$(basename "$0")** must be called with a separator" && exit 1
 
-awk "BEGIN { OFS=\"\"; ORS=\"\" } { if (acc) print acc, \"$1\"; acc=\$0 } END { print acc \"\n\" }"
+awk "BEGIN { OFS=\"\"; ORS=\"\" } { if (acc) print acc, \"$1\"; acc=\$0 } END { print acc \"\\n\" }"
