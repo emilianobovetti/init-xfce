@@ -23,7 +23,10 @@ while [ $# -gt 0 ]; do
     shift ||:
 done
 
-if ! user-exists "$user_name"; then
+if [ -z "$user_name" ]; then
+    log --error "please specify a user with the ^--user^ flag"
+    exit 1
+elif ! user-exists "$user_name"; then
     log --error "user $user_name doesn't seem to exist"
     exit 1
 elif [ -z "$(user-home "$user_name")" ]; then
