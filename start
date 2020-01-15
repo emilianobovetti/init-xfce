@@ -74,6 +74,6 @@ fi
 $add_sudoer && add-sudoer --user "$user_name"
 $enable_autologin && set-autologin --user "$user_name"
 
-[ -n "$script_list" ] && run-install "$script_list" --user "$user_name"
-
 sudo -nu "$user_name" bash -c "PATH=\"$PATH\" \"$utils_path/restore-home-env\""
+
+[ -n "$script_list" ] && run-install "$script_list" --user "$user_name"
