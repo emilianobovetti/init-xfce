@@ -5,7 +5,7 @@ if [ "$EUID" -eq 0 ]; then
     exit 1
 fi
 
-base_path="$(location-of base)"
+home_path="$(location-of home)"
 utils_path="$(location-of utils)"
 home_local_bin="$HOME/.local/bin"
 
@@ -23,13 +23,17 @@ log "removing ^xfce4/panel^ and ^xfce4/xfconf^"
 rm -rf "$HOME/.config/xfce4/panel" "$HOME/.config/xfce4/xfconf"
 
 log "restoring home environment backup"
-for file in "$base_path/home"/*; do
-    file="$(basename "$file")"
 
-    if [ -d "$base_path/home/$file" ]; then
-        rsync -r "$base_path/home/$file/." "$HOME/$file"
+# Using find to list hidden files too
+find "$home_path" -maxdepth 1 | while read path; do
+    filename="$(basename "$path")"
+
+    if [ "$path" = "$home_path" ]; then
+        continue
+    elif [ -d "$path" ]; then
+        rsync -r "$path/." "$HOME/$filename"
     else
-        rsync -r "$base_path/home/$file" "$HOME/$file"
+        rsync -r "$path" "$HOME/$filename"
     fi
 done
 
