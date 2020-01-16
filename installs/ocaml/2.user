@@ -11,7 +11,7 @@ if [ -z "$(command -v opam)" ]; then
 fi
 
 log "opam ^init^"
-opam init
+opam init -ya --solver=mccs
 
-log "opam ^install utop ocamlmerlin^"
-opam install -y utop ocamlmerlin
+log "opam ^install utop merlin^"
+opam install -y utop merlin

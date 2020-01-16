@@ -2,3 +2,8 @@
 
 log "apt-get ^install opam m4^"
 apt-get --yes install opam m4
+
+# workaround for https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=908203
+# see also https://github.com/ocaml/opam/issues/3827
+log "apt-get ^install mccs^"
+apt-get --yes install mccs
