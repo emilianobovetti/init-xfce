@@ -1,3 +1,21 @@
+# [0.3.0](https://github.com/emilianobovetti/init-xfce/compare/0.2.1...0.3.0) (2020-01-16)
+
+
+### Bug Fixes
+
+* appropriate mega installer for OS version ([6558cae](https://github.com/emilianobovetti/init-xfce/commit/6558cae))
+* check user_name variable emptiness ([3c2f5f9](https://github.com/emilianobovetti/init-xfce/commit/3c2f5f9))
+* home file restore ([a704b12](https://github.com/emilianobovetti/init-xfce/commit/a704b12))
+* preserve modifications made by install scripts ([f757b5a](https://github.com/emilianobovetti/init-xfce/commit/f757b5a))
+* shellcheck compliance, fail if it finds problems ([3f44b54](https://github.com/emilianobovetti/init-xfce/commit/3f44b54))
+* workaround for debian bug [#908203](https://github.com/emilianobovetti/init-xfce/issues/908203) ([5c16378](https://github.com/emilianobovetti/init-xfce/commit/5c16378))
+* xfce panel restart ([ee4da48](https://github.com/emilianobovetti/init-xfce/commit/ee4da48))
+
+
+### Features
+
+* install ocamlmerlin ([54448fc](https://github.com/emilianobovetti/init-xfce/commit/54448fc))
+
 ## [0.2.1](https://github.com/emilianobovetti/init-xfce/compare/0.2.0...0.2.1) (2020-01-02)
 
 # [0.2.0](https://github.com/emilianobovetti/init-xfce/compare/0.1.4...0.2.0) (2019-09-04)
