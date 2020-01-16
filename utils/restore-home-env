@@ -15,6 +15,11 @@ test -d "$HOME/.vim/swap" || mkdir "$HOME/.vim/swap"
 test -d "$HOME/.vim/undo" || mkdir "$HOME/.vim/undo"
 test -d "$HOME/.vim/backup" || mkdir "$HOME/.vim/backup"
 
+# set DBUS_SESSION_BUS_ADDRESS
+for pid in $(pgrep '^xfce4-session$'); do
+    eval "export $(grep -z ^DBUS_SESSION_BUS_ADDRESS= "/proc/$pid/environ" | tr '\0' '\n')"
+done
+
 log "^xfce4-panel^ --quit"
 xfce4-panel --quit ||:
 pkill xfconfd

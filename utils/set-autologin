@@ -30,7 +30,7 @@ fi
 
 lightdm_conf=/etc/lightdm/lightdm.conf
 
-if [ "$(grep -c "^\s*autologin-user" $lightdm_conf)" -gt 0 ]; then
+if [ "$(grep -c "^\\s*autologin-user" $lightdm_conf)" -gt 0 ]; then
     log --warn "autologin-user is already setted in ^lightdm.conf^"
 else
     log "setting autologin-user in ^$lightdm_conf^"
