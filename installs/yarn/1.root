@@ -12,7 +12,7 @@ else
 fi
 
 log "apt-get ^update^"
-apt-get --yes update
+apt-get update
 
 log "apt-get ^install yarn^"
 apt-get --yes install yarn

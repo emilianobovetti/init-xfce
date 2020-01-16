@@ -59,7 +59,7 @@ ask -Yn "Do you want to add $user_name in ^/etc/sudoers^?" && add_sudoer=true
 ask -yN "Do you want to enable autologin with for $user_name?" && enable_autologin=true
 
 log "apt-get ^update^"
-apt-get --yes update
+apt-get update
 
 log "apt-get ^dist-upgrade^"
 apt-get --yes dist-upgrade
