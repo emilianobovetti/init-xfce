@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/emilianobovetti/init-xfce/compare/0.3.0...0.3.1) (2020-01-17)
+
+
+### Bug Fixes
+
+* upgrade global yarn packages ([a17e5f6](https://github.com/emilianobovetti/init-xfce/commit/a17e5f6))
+
 # [0.3.0](https://github.com/emilianobovetti/init-xfce/compare/0.2.1...0.3.0) (2020-01-16)
 
 
