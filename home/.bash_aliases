@@ -1,12 +1,16 @@
-# System #
+# System
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias cp='cp -i'
 alias bc='bc -l'
 alias ping='ping -c 5'
-alias preln="sudo 'prelink -afmR'"
 
-# Network #
+# Utils
+alias desk="cd "$(xdg-user-dir DESKTOP)""
+alias click-flood='xdotool click --repeat 100 --delay 10 1'
+alias wine-killall="kill $(ps aux | grep -E  '.*\.exe' | awk '{print $2}')"
+
+# Network
 alias chromium-tor='chromium --proxy-server=SOCKS5://localhost:9050 --incognito'
 alias pgstart='su - postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l logfile start"'
 alias pgstop='su - postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l logfile stop"'
@@ -22,17 +26,12 @@ function pingb {
     wait
 }
 
-# JSON #
 function curl-json {
     curl -i -X POST -H "Content-type: application/json" -d "$2" "$1"
     echo
 }
 
-# cd #
-alias desk="cd "$(xdg-user-dir DESKTOP)""
-
-# Git #
-
+# Git
 alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
@@ -42,9 +41,3 @@ alias gd='git diff'
 alias gco='git checkout'
 alias gb='git branch'
 alias gl="git log --format='%Cgreen%h%Creset %C(cyan)%an%Creset - %s' --graph"
-
-# Wine #
-alias wine-killall="kill $(ps aux | grep -E  '.*\.exe' | awk '{print $2}')"
-
-# Click flood #
-alias click-flood='xdotool click --repeat 100 --delay 10 1'
