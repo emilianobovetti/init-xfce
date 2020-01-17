@@ -14,9 +14,11 @@ dist_name="$(node get-package-info.js name)"
 
 mkdir -p dist "dist/$dist_name"
 cp -r home installs utils start utils-env "dist/$dist_name"
-cd dist && tar -czf "${dist_name}.tar.gz" "$dist_name"
 
-cd "$self_path"
+(
+    cd dist
+    tar -czf "${dist_name}.tar.gz" "$dist_name"
+)
 
 git checkout master
 git remote set-url origin "https://emilianobovetti:${GITHUB_TOKEN}@github.com/emilianobovetti/init-xfce.git"
