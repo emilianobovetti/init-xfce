@@ -1,3 +1,10 @@
+## [0.3.2](https://github.com/emilianobovetti/init-xfce/compare/0.3.1...0.3.2) (2020-02-19)
+
+
+### Bug Fixes
+
+* add sbin paths when missing ([61c2b88](https://github.com/emilianobovetti/init-xfce/commit/61c2b88))
+
 ## [0.3.1](https://github.com/emilianobovetti/init-xfce/compare/0.3.0...0.3.1) (2020-01-17)
 
 
