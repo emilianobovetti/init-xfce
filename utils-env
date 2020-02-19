@@ -8,6 +8,20 @@ if [ "$(echo "$PATH" | grep -c -- "$utils_dir")" -lt 1 ]; then
     export PATH="$PATH:$utils_dir"
 fi
 
+if [ "$EUID" -eq 0 ]; then
+    if [ "$(echo "$PATH" | grep -c /usr/local/sbin)" -lt 1 ]; then
+        export PATH="$PATH:/usr/local/sbin"
+    fi
+
+    if [ "$(echo "$PATH" | grep -c /usr/sbin)" -lt 1 ]; then
+        export PATH="$PATH:/usr/sbin"
+    fi
+
+    if [ "$(echo "$PATH" | grep -c /sbin)" -lt 1 ]; then
+        export PATH="$PATH:/sbin"
+    fi
+fi
+
 cmd="${1:-}"
 
 if [ -n "$cmd" ] && [ "$cmd" != -- ]; then
