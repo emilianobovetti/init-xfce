@@ -36,6 +36,7 @@ unrar-free
 lm-sensors
 simple-scan
 transmission
+inotify-tools
 gvfs-backends
 poppler-utils
 apt-transport-https
