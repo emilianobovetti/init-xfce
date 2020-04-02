@@ -1,6 +1,6 @@
 {
   "name": "init-xfce",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "author": "Emiliano Bovetti",
   "license": "GPL-3.0",
   "devDependencies": {

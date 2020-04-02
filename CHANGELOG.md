@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/emilianobovetti/init-xfce/compare/0.3.2...0.4.0) (2020-04-02)
+
+
+### Features
+
+* install inotify-tools ([8daf0fb](https://github.com/emilianobovetti/init-xfce/commit/8daf0fbe5cd0e37df04dd89fac7c639f55f3e057))
+
 ## [0.3.2](https://github.com/emilianobovetti/init-xfce/compare/0.3.1...0.3.2) (2020-02-19)
 
 
