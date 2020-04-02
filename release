@@ -23,4 +23,4 @@ cp -r home installs utils start utils-env "dist/$dist_name"
 git checkout master
 git remote set-url origin "https://emilianobovetti:${GITHUB_TOKEN}@github.com/emilianobovetti/init-xfce.git"
 
-npx release-it -n
+npx release-it --ci

@@ -3,7 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - "13"
+  - 13
 
 cache:
   yarn: true
@@ -22,4 +22,3 @@ deploy:
 addons:
   apt:
     update: true
-
