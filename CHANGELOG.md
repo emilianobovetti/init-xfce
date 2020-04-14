@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/emilianobovetti/init-xfce/compare/0.4.0...0.4.1) (2020-04-14)
+
+
+### Bug Fixes
+
+* remove yarn global package.json ([8e39bb7](https://github.com/emilianobovetti/init-xfce/commit/8e39bb7a486d1363627145a8b74cedeb54a1524f))
+
 # [0.4.0](https://github.com/emilianobovetti/init-xfce/compare/0.3.2...0.4.0) (2020-04-02)
 
 
