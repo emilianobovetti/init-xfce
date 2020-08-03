@@ -1,3 +1,5 @@
+## [0.4.5](https://github.com/emilianobovetti/init-xfce/compare/0.4.4...0.4.5) (2020-08-03)
+
 ## [0.4.4](https://github.com/emilianobovetti/init-xfce/compare/0.4.3...0.4.4) (2020-08-02)
 
 ## [0.4.3](https://github.com/emilianobovetti/init-xfce/compare/0.4.2...0.4.3) (2020-07-21)
