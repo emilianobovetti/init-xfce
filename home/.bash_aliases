@@ -22,7 +22,7 @@ alias chromium-tor='chromium --proxy-server=SOCKS5://localhost:9050 --incognito'
 alias wifi-mon="sudo 'iwconfig wlan0 mode Monitor && rfkill unblock wifi'"
 
 function giphy {
-    ffmpeg -i "$1" -r 15 "$1".gif
+    ffmpeg -i "$1" -vf "fps=10,scale=700:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 "$1".gif
 }
 
 function curl-json {
