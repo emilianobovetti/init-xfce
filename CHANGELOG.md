@@ -1,3 +1,10 @@
+## [0.4.7](https://github.com/emilianobovetti/init-xfce/compare/0.4.6...0.4.7) (2020-08-24)
+
+
+### Bug Fixes
+
+* giphy parameters ([ce2777d](https://github.com/emilianobovetti/init-xfce/commit/ce2777d92e141307a31dde548406f964c2ad0ad9))
+
 ## [0.4.6](https://github.com/emilianobovetti/init-xfce/compare/0.4.3...0.4.6) (2020-08-03)
 
 ## [0.4.5](https://github.com/emilianobovetti/init-xfce/compare/0.4.4...0.4.5) (2020-08-03)
